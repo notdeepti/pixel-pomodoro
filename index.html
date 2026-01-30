@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Pixel Pomodoro</title>
+
+  <!-- Pixel Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;600&display=swap" rel="stylesheet">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- BACKGROUND RUNNERS -->
+  <div class="mouse-runner"></div>
+  <div class="cat-runner"></div>
+
+  <!-- MAIN APP -->
+  <div class="app">
+
+    <h1 class="title">Pomodoro Timer</h1>
+
+    <!-- MODE -->
+    <p id="mode">FOCUS</p>
+
+    <!-- IDLE CAT -->
+    <img
+      id="cat"
+      src="assets/sprites/cat.png"
+      alt="pixel cat"
+      width="64"
+    >
+
+    <!-- TIMER -->
+    <div class="timer-box">
+      <span id="timer">25:00</span>
+    </div>
+
+    <!-- CONTROLS -->
+    <div class="controls">
+      <button id="start">START</button>
+      <button id="pause">PAUSE</button>
+      <button id="reset">RESET</button>
+      <button id="musicToggle">MUSIC: OFF</button>
+
+    </div>
+
+    <!-- SETTINGS -->
+    <div class="settings">
+      <label>
+        Focus:
+        <input type="number" id="focusInput" value="25" min="1">
+      </label>
+
+      <label>
+        Break:
+        <input type="number" id="breakInput" value="5" min="1">
+      </label>
+    </div>
+
+  </div>
+
+  <!-- JavaScript -->
+  <script src="script.js"></script>
+
+</body>
+</html>

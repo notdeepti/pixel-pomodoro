@@ -1,0 +1,202 @@
+/* ===============================
+   RESET + FONT
+================================ */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Pixelify Sans", monospace;
+}
+
+/* ===============================
+   PAGE BACKGROUND
+================================ */
+body {
+  position: relative;
+  height: 100vh;
+  overflow: hidden;
+  background-image: url("assets/sprites/cafe-bg1.gif");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===============================
+   MAIN APP CONTAINER
+================================ */
+.app {
+  position: relative;
+  z-index: 10;
+  background-color: rgba(137, 207, 240, 0.95);
+  padding: 32px;
+  border: 4px solid #0047AB;
+  text-align: center;
+}
+
+/* ===============================
+   TITLE + MODE
+================================ */
+.title {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #00008B;
+}
+
+#mode {
+  font-size: 14px;
+  margin-bottom: 12px;
+  color: #00008B;
+}
+
+/* ===============================
+   TIMER DISPLAY
+================================ */
+.timer-box {
+  font-size: 48px;
+  margin-bottom: 24px;
+  background-color: #ADD8E6;
+  padding: 16px;
+  border: 4px solid #0047AB;
+  color: #0047AB;
+}
+
+/* ===============================
+   BUTTONS
+================================ */
+.controls button {
+  font-size: 16px;
+  padding: 10px 16px;
+  margin: 6px;
+  background-color: #6495ED;
+  border: 4px solid #0047AB;
+  cursor: pointer;
+  color: #2b083f;
+}
+
+.controls button:hover {
+  background-color: #00A36C;
+}
+
+/* ===============================
+   SETTINGS
+================================ */
+.settings {
+  margin-top: 16px;
+  font-size: 14px;
+  color: #3b114f;
+}
+
+.settings input {
+  width: 50px;
+  margin-left: 6px;
+  padding: 4px;
+  border: 2px solid #0047AB;
+  background: #ADD8E6;
+}
+
+/* ===============================
+   PIXEL PERFECT
+================================ */
+img,
+.cat-runner,
+.mouse-runner {
+  image-rendering: pixelated;
+}
+
+/* ===============================
+   IDLE CAT
+================================ */
+#cat {
+  width: 64px;
+  height: 64px;
+  margin-bottom: 12px;
+  animation: float 1.5s infinite alternate;
+}
+
+@keyframes float {
+  from { transform: translateY(0); }
+  to   { transform: translateY(-4px); }
+}
+
+/* ===============================
+   BACKGROUND RUNNERS
+================================ */
+
+/* ---- CAT RUNNER ---- */
+.cat-runner {
+  position: absolute;
+  bottom: 40px;
+  left: -300px;
+
+  width: 96px;
+  height: 96px;
+
+  background-image: url("assets/sprites/cats/cat-run.png");
+  background-repeat: no-repeat;
+  background-size: 576px 96px; /* 6 frames */
+
+  z-index: 5;
+
+  animation:
+    cat-run-frames 0.8s steps(6) infinite,
+    chase-move 12s linear infinite;
+
+  animation-play-state: paused;
+}
+
+/* ---- MOUSE RUNNER ---- */
+.mouse-runner {
+  position: absolute;
+  bottom: 5px;
+  left: -300px;
+
+  width: 96px;
+  height: 96px;
+
+  background-image: url("assets/sprites/mouse/mouse-run.png");
+  background-repeat: no-repeat;
+  background-size: 96px 576px; /* 6 vertical frames */
+
+  z-index: 6;
+
+  transform: translateX(140px); /* stays ahead */
+
+  animation:
+    mouse-frames 0.6s steps(6) infinite,
+    chase-move 12s linear infinite;
+
+  animation-play-state: paused;
+}
+
+/* ===============================
+   SPRITE FRAMES
+================================ */
+@keyframes cat-run-frames {
+  from { background-position: 0 0; }
+  to   { background-position: -576px 0; }
+}
+
+@keyframes mouse-frames {
+  from { background-position: 0 0; }
+  to   { background-position: 0 -576px; }
+}
+
+/* ===============================
+   MOVEMENT
+================================ */
+@keyframes chase-move {
+  from { left: -300px; }
+  to   { left: 110vw; }
+}
+
+/* ===============================
+   BUTTON CONTROL
+================================ */
+body.running .cat-runner,
+body.running .mouse-runner {
+  animation-play-state: running;
+}
