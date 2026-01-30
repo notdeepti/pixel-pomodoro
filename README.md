@@ -5,41 +5,17 @@ Built using HTML, CSS, and JavaScript.
 
 ✨ Features:
 
-⏱️ Pomodoro Timer
+🐱 Animated pixel cats  
+☕ Cozy cafe background  
+🎵 Built-in lofi music toggle  
+🕒 Customizable focus sessions
 
-Custom Focus & Break durations
 
-Automatic mode switching
 
-3-second pause between modes
+### 📂 Project Structure
 
-🐾 Pixel Animations
-
-Running cat chasing a mouse in the background
-
-Idle floating cat inside the timer
-
-Animations react to Start / Pause / Reset
-
-🎧 Audio
-
-Focus & Break alarm sounds
-
-Looping lofi background music
-
-Music ON / OFF toggle
-
-🎨 Aesthetic UI
-
-Pixel font
-
-Animated café background
-
-Soft blue theme
-
-🗂️ Project Structure:
+```text
 pixel-pomodoro/
-│
 ├── index.html
 ├── style.css
 ├── script.js
@@ -59,8 +35,9 @@ pixel-pomodoro/
 │       └── lofi.mp3
 │
 └── README.md
+```
 
-~How to Run Locally~
+~ How to Run Locally ~
 
 Download or clone the repository
 
