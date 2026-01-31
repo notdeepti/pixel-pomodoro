@@ -12,6 +12,8 @@ const focusInput = document.getElementById("focusInput");
 const breakInput = document.getElementById("breakInput");
 
 const musicBtn = document.getElementById("musicToggle");
+const sessionCountEl = document.getElementById("sessionCount");
+const streakCountEl = document.getElementById("streakCount");
 
 // ===============================
 // AUDIO
@@ -33,7 +35,10 @@ let isRunning = false;
 let isFocus = true;
 let timer = null;
 let timeLeft = 0;
-
+let endTime = null;
+let sessionsCompleted = Number(localStorage.getItem("sessionsCompleted")) || 0;
+let streak = Number(localStorage.getItem("streak")) || 0;
+let lastSessionDate = localStorage.getItem("lastSessionDate");
 // ===============================
 // FUNCTIONS
 // ===============================
@@ -47,6 +52,93 @@ function unlockAudio() {
   audioUnlocked = true;
 }
 
+function getTodayDate() {
+  return new Date().toISOString().split("T")[0];
+}
+
+function updateStatsUI() {
+  sessionCountEl.textContent = sessionsCompleted;
+  streakCountEl.textContent = streak;
+}
+
+function updateStreak() {
+  const today = getTodayDate();
+
+  if (!lastSessionDate) {
+    // First ever session
+    streak = 1;
+  } else {
+    const last = new Date(lastSessionDate);
+    const current = new Date(today);
+
+    const diffDays = Math.floor(
+      (current - last) / (1000 * 60 * 60 * 24)
+    );
+
+    if (diffDays === 1) {
+      // Continued streak
+      streak += 1;
+    } else if (diffDays > 1) {
+      // Missed a day → reset
+      streak = 1;
+    }
+    // diffDays === 0 → same day, streak unchanged
+  }
+
+  lastSessionDate = today;
+
+  localStorage.setItem("streak", streak);
+  localStorage.setItem("lastSessionDate", lastSessionDate);
+}
+
+
+// ===============================
+// NOTIFICATIONS
+// ===============================
+function requestNotificationPermission() {
+  if (!("Notification" in window)) {
+    console.log("This browser does not support notifications");
+    return;
+  }
+
+  if (Notification.permission === "default") {
+    Notification.requestPermission();
+  }
+}
+function showNotification(title, body) {
+  if (Notification.permission === "granted") {
+    new Notification(title, {
+      body: body,
+      icon: "assets/sprites/cat.png", // optional cute icon 🐱
+    });
+  }
+}
+
+function playAlertWithNotification(sound, title, message) {
+  // Stop background music cleanly
+  lofiMusic.pause();
+  lofiMusic.currentTime = 0;
+
+  sound.currentTime = 0;
+
+  // Play sound FIRST
+  sound.play().then(() => {
+    // Fire notification exactly when sound starts
+    showNotification(title, message);
+  }).catch(() => {
+    // Fallback if browser blocks audio
+    showNotification(title, message);
+  });
+
+  // Resume lofi AFTER alert (only if enabled)
+  sound.onended = () => {
+    if (musicOn) {
+      lofiMusic.play().catch(() => {});
+    }
+  };
+}
+
+
 function updateDisplay() {
   const minutes = Math.floor(timeLeft / 60);
   const seconds = timeLeft % 60;
@@ -58,31 +150,38 @@ function updateDisplay() {
 }
 
 function startTimer() {
+  requestNotificationPermission();
+
   unlockAudio();
+  if (musicOn) {
+  lofiMusic.play().catch(() => {});
+}
+
   if (isRunning) return;
 
   isRunning = true;
   document.body.classList.add("running");
 
-  if (musicOn) {
-    lofiMusic.play();
-  }
+  endTime = Date.now() + timeLeft * 1000;
 
   timer = setInterval(() => {
-    timeLeft--;
+    const now = Date.now();
+    timeLeft = Math.max(0, Math.floor((endTime - now) / 1000));
     updateDisplay();
 
-    if (timeLeft <= 0) {
+    if (timeLeft === 0) {
       handleModeEnd();
     }
-  }, 1000);
+  }, 500);
 }
+
 
 function pauseTimer() {
   isRunning = false;
   clearInterval(timer);
   document.body.classList.remove("running");
   lofiMusic.pause();
+  timeLeft = Math.max(0, Math.floor((endTime - Date.now()) / 1000));
 }
 
 function resetTimer() {
@@ -103,26 +202,42 @@ function handleModeEnd() {
   lofiMusic.pause();
 
   // ⏸ 3-second pause before switching
-  setTimeout(() => {
-    if (isFocus) {
-      breakSound.currentTime = 0;
-      breakSound.play();
+ setTimeout(() => {
+  if (isFocus) {
+    // Focus → Break
+    // ✅ Focus session completed
+sessionsCompleted += 1;
+localStorage.setItem("sessionsCompleted", sessionsCompleted);
 
-      isFocus = false;
-      modeDisplay.textContent = "BREAK";
-      timeLeft = breakInput.value * 60;
-    } else {
-      focusSound.currentTime = 0;
-      focusSound.play();
+updateStreak();
+updateStatsUI();
 
-      isFocus = true;
-      modeDisplay.textContent = "FOCUS";
-      timeLeft = focusInput.value * 60;
-    }
+    playAlertWithNotification(
+      breakSound,
+      "Break Time 💤",
+      "Focus session complete! Time to relax ☕"
+    );
 
-    updateDisplay();
-    startTimer();
-  }, 3000);
+    isFocus = false;
+    modeDisplay.textContent = "BREAK";
+    timeLeft = breakInput.value * 60;
+  } else {
+    // Break → Focus
+    playAlertWithNotification(
+      focusSound,
+      "Focus Time 🎯",
+      "Break over! Let’s get back to work 💪"
+    );
+
+    isFocus = true;
+    modeDisplay.textContent = "FOCUS";
+    timeLeft = focusInput.value * 60;
+  }
+
+  updateDisplay();
+  startTimer();
+}, 3000);
+
 }
 
 // ===============================
@@ -152,3 +267,4 @@ resetBtn.addEventListener("click", resetTimer);
 // ===============================
 timeLeft = focusInput.value * 60;
 updateDisplay();
+updateStatsUI();
