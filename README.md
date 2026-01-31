@@ -8,45 +8,19 @@ Built using HTML, CSS, and JavaScript.
 
 ## ✨ Features
 
-* **⏱ Pomodoro Timer**
-  * Custom focus and break durations
-  * Smooth mode switching with a short pause between sessions
-* **🎧 Lo-Fi Background Music**
-  * Optional looping lo-fi track for focus
-  * One-click Music ON/OFF toggle
-* **🔔 Sound Alerts**
-  * Distinct sounds for: **Focus → Break** and **Break → Focus**
-  * Audio unlocks on first user interaction (browser-safe)
-* **🔔 System Notifications**
-  * Desktop notifications when a session ends
-  * Works even when the tab is not active
-* **🐱 Animated Pixel Cat**
-  * Idle floating animation
-  * Runs when the timer is active
-  * Reacts visually to session progress
-* **🔥 Daily Streak Tracker**
-  * Streak continues if at least one focus session is completed per day
-  * Automatically resets after a missed calendar day
-  * Fire emoji 🔥 to motivate consistency
-* **📊 Session Counter**
-  * Tracks total completed focus sessions
-  * Updates only after a full focus session finishes
-* **💾 Persistent Progress**
-  * Sessions completed and streaks are saved using `localStorage`
-  * Progress remains even after refresh or browser restart
-* **🐱🎉 Cat Celebration on Streak Increase**
-  * Cat jumps and glows when the daily streak increases
-  * Optional celebratory sound effect
-* **🎨 Pixel-Art UI**
-  * Soft blue color palette
-  * Blocky borders and retro font styling
-  * Consistent pixel-perfect visuals
-* **⚡ Accurate Background Timing**
-  * Timer stays accurate even when the browser tab is inactive
-  * Uses real time difference instead of relying on intervals
-* **🌐 Deployed with GitHub Pages**
-  * Fully static site
-  * No backend required
+- A clean **Pomodoro timer** with focus and break modes  
+- **Custom durations** for focus and break sessions  
+- **Pixel-art UI** with a soft blue theme and retro vibes  
+- A cute **pixel cat 🐱** that runs when the timer is active and reacts to your progress  
+- **Lo-fi background music** to help you stay focused  
+- Simple **music ON/OFF toggle**  
+- **Sound alerts** when switching between focus and break modes  
+- **System notifications** so you don’t miss a session ending, even when the tab isn’t active  
+- **Session counter** that increases after every completed focus session  
+- **Daily streak tracker 🔥** that rewards consistency and resets if you miss a day  
+- Progress is **saved automatically** using `localStorage` (safe even after refresh)  
+- Timer remains **accurate in the background** when you switch tabs  
+- Fully **static website**, easy to deploy and update using **GitHub Pages**
 
 
 
