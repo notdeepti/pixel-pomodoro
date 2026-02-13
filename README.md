@@ -11,7 +11,7 @@ Built using HTML, CSS, and JavaScript.
 - A clean **Pomodoro timer** with focus and break modes  
 - **Custom durations** for focus and break sessions  
 - **Pixel-art UI** with a soft blue theme and retro vibes  
-- A cute **pixel cat 🐱** that runs when the timer is active and reacts to your progress  
+- A cute **pixel cat 🐱** that runs when the timer is active  
 - **Lo-fi background music** to help you stay focused  
 - Simple **music ON/OFF toggle**  
 - **Sound alerts** when switching between focus and break modes  
@@ -19,8 +19,8 @@ Built using HTML, CSS, and JavaScript.
 - **Session counter** that increases after every completed focus session  
 - **Daily streak tracker 🔥** that rewards consistency and resets if you miss a day  
 - Progress is **saved automatically** using `localStorage` (safe even after refresh)  
-- Timer remains **accurate in the background** when you switch tabs  
-- Fully **static website**, easy to deploy and update using **GitHub Pages**
+ 
+
 
 
 
