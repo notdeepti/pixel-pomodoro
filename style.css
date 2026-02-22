@@ -238,3 +238,172 @@ body.running .mouse-runner {
   border-color: #ff9f43;
   box-shadow: 4px 4px 0 #cc7a29;
 }
+
+/* ===============================
+   RESPONSIVE DESIGN
+================================ */
+
+/* Tablet Devices (768px - 1024px) */
+@media screen and (max-width: 1024px) {
+  .app {
+    padding: 24px;
+    max-width: 90%;
+  }
+  
+  .title {
+    font-size: 28px;
+    margin-bottom: 16px;
+  }
+  
+  .timer-box {
+    font-size: 40px;
+    padding: 12px;
+    margin-bottom: 20px;
+  }
+  
+  .controls button {
+    font-size: 14px;
+    padding: 8px 12px;
+    margin: 4px;
+  }
+  
+  .pixel-hud {
+    top: 12px;
+    right: 12px;
+    gap: 8px;
+  }
+  
+  .stat-box {
+    min-width: 70px;
+    padding: 6px 8px;
+  }
+  
+  .stat-number {
+    font-size: 12px;
+  }
+  
+  .stat-label {
+    font-size: 6px;
+  }
+}
+
+/* Mobile Devices (< 768px) */
+@media screen and (max-width: 768px) {
+  body {
+    padding: 10px;
+  }
+  
+  .app {
+    padding: 16px;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+  }
+  
+  .title {
+    font-size: 24px;
+    margin-bottom: 12px;
+  }
+  
+  #mode {
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+  
+  #cat {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 8px;
+  }
+  
+  .timer-box {
+    font-size: 32px;
+    padding: 10px;
+    margin-bottom: 16px;
+  }
+  
+  .controls {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+  }
+  
+  .controls button {
+    font-size: 12px;
+    padding: 8px 12px;
+    margin: 0;
+    flex: 1 1 calc(50% - 4px);
+    min-width: 100px;
+  }
+  
+  .controls button:nth-child(4) {
+    flex: 1 1 100%;
+  }
+  
+  .settings {
+    margin-top: 12px;
+    font-size: 12px;
+  }
+  
+  .settings input {
+    width: 40px;
+    padding: 2px;
+  }
+  
+  .pixel-hud {
+    position: fixed;
+    top: 8px;
+    right: 8px;
+    left: 8px;
+    flex-direction: column;
+    gap: 6px;
+    align-items: flex-end;
+  }
+  
+  .stat-box {
+    min-width: 60px;
+    padding: 4px 6px;
+  }
+  
+  .stat-number {
+    font-size: 10px;
+  }
+  
+  .stat-label {
+    font-size: 5px;
+    margin-top: 4px;
+  }
+}
+
+/* Small Mobile Devices (< 480px) */
+@media screen and (max-width: 480px) {
+  .app {
+    padding: 12px;
+  }
+  
+  .title {
+    font-size: 20px;
+    margin-bottom: 10px;
+  }
+  
+  .timer-box {
+    font-size: 28px;
+    padding: 8px;
+    margin-bottom: 12px;
+  }
+  
+  .controls button {
+    font-size: 10px;
+    padding: 6px 8px;
+    min-width: 80px;
+  }
+  
+  .settings {
+    font-size: 10px;
+  }
+  
+  .settings input {
+    width: 35px;
+  }
+}
