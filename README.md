@@ -37,6 +37,8 @@ pixel-pomodoro/
 └── README.md
 ```
 
+CLICK HERE TO ACCESS:https://notdeepti.github.io/pixel-pomodoro/
+
 ~ How to Run Locally ~
 
 Download or clone the repository
