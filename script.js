@@ -38,7 +38,8 @@ let timeLeft = 0;
 let endTime = null;
 let sessionsCompleted = Number(localStorage.getItem("sessionsCompleted")) || 0;
 let streak = Number(localStorage.getItem("streak")) || 0;
-let lastSessionDate = localStorage.getItem("lastSessionDate");
+let lastSessionTimestamp = Number(localStorage.getItem("lastSessionTimestamp")) || 0;
+const TWENTY_FOUR_HOURS_MS = 24 * 60 * 60 * 1000;
 // ===============================
 // FUNCTIONS
 // ===============================
@@ -52,43 +53,36 @@ function unlockAudio() {
   audioUnlocked = true;
 }
 
-function getTodayDate() {
-  return new Date().toISOString().split("T")[0];
-}
-
 function updateStatsUI() {
   sessionCountEl.textContent = sessionsCompleted;
   streakCountEl.textContent = streak;
 }
 
-function updateStreak() {
-  const today = getTodayDate();
+function resetStatsIfExpired() {
+  if (!lastSessionTimestamp) return;
 
-  if (!lastSessionDate) {
-    // First ever session
-    streak = 1;
-  } else {
-    const last = new Date(lastSessionDate);
-    const current = new Date(today);
+  const now = Date.now();
+  const hasExpired = now - lastSessionTimestamp >= TWENTY_FOUR_HOURS_MS;
 
-    const diffDays = Math.floor(
-      (current - last) / (1000 * 60 * 60 * 24)
-    );
+  if (hasExpired) {
+    sessionsCompleted = 0;
+    streak = 0;
 
-    if (diffDays === 1) {
-      // Continued streak
-      streak += 1;
-    } else if (diffDays > 1) {
-      // Missed a day → reset
-      streak = 1;
-    }
-    // diffDays === 0 → same day, streak unchanged
+    localStorage.setItem("sessionsCompleted", sessionsCompleted);
+    localStorage.setItem("streak", streak);
   }
+}
 
-  lastSessionDate = today;
+function recordCompletedFocusSession() {
+  resetStatsIfExpired();
 
+  sessionsCompleted += 1;
+  streak += 1;
+  lastSessionTimestamp = Date.now();
+
+  localStorage.setItem("sessionsCompleted", sessionsCompleted);
   localStorage.setItem("streak", streak);
-  localStorage.setItem("lastSessionDate", lastSessionDate);
+  localStorage.setItem("lastSessionTimestamp", lastSessionTimestamp.toString());
 }
 
 
@@ -206,10 +200,7 @@ function handleModeEnd() {
   if (isFocus) {
     // Focus → Break
     // ✅ Focus session completed
-sessionsCompleted += 1;
-localStorage.setItem("sessionsCompleted", sessionsCompleted);
-
-updateStreak();
+recordCompletedFocusSession();
 updateStatsUI();
 
     playAlertWithNotification(
@@ -266,5 +257,6 @@ resetBtn.addEventListener("click", resetTimer);
 // INIT
 // ===============================
 timeLeft = focusInput.value * 60;
-updateDisplay();
+resetStatsIfExpired();
 updateStatsUI();
+updateDisplay();
